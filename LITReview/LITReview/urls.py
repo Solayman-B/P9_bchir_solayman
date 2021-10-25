@@ -15,10 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from LITReview.views import index
 
 urlpatterns = [
-     path('',  index, name="index"),
-    path('connexion/', include("connexion.urls")),
     path('admin/', admin.site.urls),
+    path('', include("members.urls")),
+    path('content', include("content.urls")),
 ]

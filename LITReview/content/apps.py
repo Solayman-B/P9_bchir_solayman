@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class ConnexionConfig(AppConfig):
+class ContentConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'connexion'
+    name = 'content'

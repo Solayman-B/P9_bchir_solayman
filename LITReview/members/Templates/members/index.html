@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content_box_3 %}
+ <div class="box_3">
+                <p class="text">Inscrivez-vous maintenant</p>
+                <button id="inscription" onclick="window.location.href = '/inscription';">S'incrire</button>
+ </div>
+<div class="box_3">
+                <p class="text">Connectez-vous</p>
+                <input type="text" id="name" class="text_field" required
+       minlength="4" maxlength="20" size="50" placeholder="Nom d'utilisateur">
+                <input type="text" id="password" class="text_field" required
+       minlength="4" maxlength="20" size="50" placeholder="Mot de passe">
+                <button id="connection">Se connecter</button>
+</div>
+{% endblock %}

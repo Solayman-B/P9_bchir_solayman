@@ -1,4 +1,8 @@
 
+ul {
+  list-style-type: none;
+}
+
 ::placeholder {
   color: black;
   text-align: center;
@@ -32,7 +36,7 @@ button{
   margin-left: 50px;
 }
 
-#connexion {
+#connection {
 margin-left: 175px;
 }
 
@@ -43,17 +47,10 @@ margin-left: 175px;
 .box {
   text-align: center;
   border: 1px solid black;
-  height: 500px;
-  width: 750px;
 }
 
 .box_2 {
   display: flex;
   justify-content: space-around;
   border-top: 1px solid black;
-}
-
-.box_3 {
-    display: flex;
-  flex-direction: column;
 }
