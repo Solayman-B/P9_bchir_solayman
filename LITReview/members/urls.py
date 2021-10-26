@@ -1,8 +1,8 @@
 from django.urls import path
-
-from . import views
+from members import views
 
 urlpatterns = [
     path('', views.index),
     path('inscription', views.inscription),
+
 ]

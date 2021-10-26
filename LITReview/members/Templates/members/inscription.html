@@ -3,5 +3,11 @@
 {% block content_box_3 %}
  <div class="box_3">
     <p>Inscrivez vous</p>
+ <form method="post", action="">
+     {{ form.username }}
+     {{ form.password1 }}
+     {{ form.password2 }}
+     <input type="submit" name="inscription">
+ </form>
 </div>
 {% endblock %}
