@@ -3,26 +3,25 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Flux</title>
+    <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <div class="box">
-        <div id="header">LITReview
-            <nav class="menu">
+    <div id="box">
+        <p>
+        LITReview
+        </p>
+        <nav id="menu">
               <ul>
-                <li><a href="#flux">Flux</a></li>
-                <li><a href="#posts">Posts</a></li>
-                <li><a href="#abonnements">Abonnements</a></li>
+                <li><a href="/content/flux">Flux</a></li>
+                <li><a href="/content/posts">Posts</a></li>
+                <li><a href="/content/follow">Abonnements</a></li>
                 <li><a href="#deconnexion">Se déconnecter</a></li>
               </ul>
-            </nav>
-        </div>
-        <div class="box_2">
-        <div>
-            {% block content_box_3 %}{% endblock %}
-        </div>
-        </div>
+        </nav>
+    </div>
+    <div id="box_2">
+        {% block content_box_3 %}{% endblock %}
     </div>
 </body>
 </html>

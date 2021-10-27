@@ -1,10 +1,9 @@
 
-ul {
-  list-style-type: none;
+li {
   display: inline;
 }
 
-::placeholder {
+::placeholder, p {
   color: black;
   text-align: center;
 }
@@ -12,10 +11,6 @@ ul {
 .text {
   font-weight: bold;
   font-size: large;
-}
-
-#litreview {
-  margin: 10px;
 }
 
 input{
@@ -30,28 +25,32 @@ button{
   background-color: white;
   border-radius: 5px;
   border: 1px solid black;
-  position: relative;
 }
 
-#inscription {
-  margin-left: 50px;
-}
 
-#connection {
-margin-left: 175px;
-}
-
-.text_field {
-  margin: 10px;
-}
-
-.box {
-  text-align: center;
+#box {
   border: 1px solid black;
 }
 
-.box_2 {
+#box_2 {
   display: flex;
   justify-content: space-around;
-  border-top: 1px solid black;
+  border: 1px solid black;
+  border-top: none;
+}
+
+#box_inscription {
+  text-align: left;
+}
+
+#box_connection, #menu {
+  text-align: right;
+}
+
+input {
+  width: 100px;
+  height: 35px;
+  background-color: white;
+  border-radius: 5px;
+  border: 1px solid black;
 }

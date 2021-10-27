@@ -6,14 +6,17 @@ from LITReview.forms import authentification_form
 
 def index(request):
 	login_form = forms.authentification_form()
-	message = 'message de test'
+	message = ''
 	if request.method == 'POST':
+		print(request.POST)
 		login_form = forms.authentification_form(request.POST)
 		if login_form.is_valid():
+			print('hello1')
 			user = authenticate(
 				username=login_form.cleaned_data['username'],
-				password=login_form.cleaned_data['password'],
+				password=login_form.cleaned_data['password1'],
 			)
+			print(user)
 			if user is not None:
 				login(request, user)
 				message = 'connexion réussie'

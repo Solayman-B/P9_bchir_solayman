@@ -5,18 +5,18 @@
 {% endblock %}
 
 {% block content_box_3 %}
- <div class="box_3">
-                <p class="text">Inscrivez-vous maintenant</p>
-                <button id="inscription" onclick="window.location.href = '/inscription';">S'incrire</button>
- </div>
-<div class="box_3">
- <p>Connectez-vous</p>
-    <p>{{ message }}</p>
+    <div id="box_inscription">
+    <h1>Inscrivez-vous maintenant</h1>
+    <button id="inscription" onclick="window.location.href = '/inscription';">S'incrire</button>
+    </div>
+<div id="box_connection">
+ <h1>Connectez-vous</h1>
+    {{ message }}
  <form method="post", action="">
      {{ form.username }}
      {{ form.password1 }}
      {% csrf_token %}
-     <input type="submit" name="Se connecter">
+     <input class="button" type="submit">
  </form>
 
 </div>
