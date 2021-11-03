@@ -13,11 +13,14 @@
  <h1>Connectez-vous</h1>
     {{ message }}
  <form method="post", action="">
+     {% csrf_token %}
      {{ form.username }}
      {{ form.password1 }}
      {% csrf_token %}
-     <input class="button" type="submit">
+     <button id="connection" onclick="window.location.href = '/content/flux';">Se connecter</button>
  </form>
-
+{% for message in messages %}
+<p id="message">{{ message }}</p>
+{% endfor %}
 </div>
 {% endblock %}

@@ -8,6 +8,7 @@
  <div class="box_3">
     <p>Inscrivez vous</p>
  <form method="post", action="">
+     {% csrf_token %}
      {{ form.username }}
      {{ form.password1 }}
      {{ form.password2 }}
