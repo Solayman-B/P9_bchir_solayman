@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Me connecter
+{% endblock %}
+
+{% block content_box_3 %}
+    <div id="box_inscription">
+    <h1>Inscrivez-vous maintenant</h1>
+    <button id="register" onclick="window.location.href = '/register';">S'incrire</button>
+    </div>
+<div id="box_connection">
+ <h1>Connectez-vous</h1>
+    {{ message }}
+ <form method="post", action="">
+     {% csrf_token %}
+     {{ form.username }}
+     {{ form.password }}
+     <button id="login" onclick="window.location.href = '/';">Se connecter</button>
+ </form>
+{% for message in messages %}
+<p id="message">{{ message }}</p>
+{% endfor %}
+</div>
+{% endblock %}

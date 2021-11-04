@@ -3,5 +3,5 @@ from members import views
 
 urlpatterns = [
     path('', views.login),
-    path('register', views.register),
+    path('register/', views.register),
 ]

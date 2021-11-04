@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    M'inscrire
+{% endblock %}
+
+{% block content_box_3 %}
+ <div class="box_3">
+    <p>Inscrivez vous</p>
+ <form method="post", action="">
+     {% csrf_token %}
+     {{ form.username }}
+     {{ form.password }}
+     {{ form.password2 }}
+     <button id="inscription" onclick="window.location.href = '/';">S'inscrire</button>
+ </form>
+</div>
+{% endblock %}
