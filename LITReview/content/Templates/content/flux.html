@@ -5,11 +5,13 @@
 {% endblock %}
 
 {% block content_box_3 %}
+{% if user.is_authenticated %}
  <div class="box_3">
    <p>
        {{ message }}
-       <button id="ticket" onclick="window.location.href = '/content/ticket';">Demander une critique</button>
-       <button id="critique" onclick="window.location.href = '/content/critique';">Créer une critique</button>
+       <button id="ticket" onclick="window.location.href = '/ticket';">Demander une critique</button>
+       <button id="review" onclick="window.location.href = '/review';">Créer une critique</button>
    </p>
 </div>
+{% endif %}
 {% endblock %}

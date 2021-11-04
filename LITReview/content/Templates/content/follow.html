@@ -1,13 +1,21 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Mes abonnements
+Suivre d'autres utilisateurs
 {% endblock %}
 
 {% block content_box_3 %}
  <div class="box_3">
-   <p>
-       Suivre d'autres utilisateurs
-   </p>
+   <p>Suivre d'autres utilisateurs</p>
+     <div>
+
+     <form method="post", action="">
+     {% csrf_token %}
+     {{ form.username }}
+     <button>Envoyer</button>
+     </form>
+     </div>
+    <p>Abonnements</p>
+    <p>Abonnés</p>
 </div>
 {% endblock %}

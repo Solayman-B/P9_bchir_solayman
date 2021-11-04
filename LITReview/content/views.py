@@ -4,15 +4,17 @@ from django.shortcuts import render
 def flux(request):
 	return render(request, "content/flux.html")
 
-def critique(request):
-	return render(request, "content/critique.html")
+
+def review(request):
+	return render(request, "content/review.html")
+
 
 def follow(request):
 	return render(request, "content/follow.html")
 
 
-def modify_critique(request):
-	return render(request, "content/modify_critique.html")
+def modify_review(request):
+	return render(request, "content/modify_review.html")
 
 
 def modify_ticket(request):
@@ -25,4 +27,3 @@ def posts(request):
 
 def ticket(request):
 	return render(request, "content/ticket.html")
-
