@@ -9,6 +9,7 @@ def login(request):
 	if request.method == 'POST':
 		login_form = UserForm(request.POST)
 		if login_form.is_valid():
+			print('coucou3')
 			user = authenticate(
 				username=login_form.cleaned_data['username'],
 				password=login_form.cleaned_data['password'],
@@ -18,12 +19,18 @@ def login(request):
 				return redirect('content/')
 			else:
 				messages.info(request, 'Identifiant et/ou mot de passe invalide(s)')
+	print('pas coucou')
 	return render(
 		request, 'members/login.html', context={'form': login_form}
 	)
 
 
-def register(request):
-	register_form = UserForm(request.POST)
-	context = {'form': register_form}
-	return render(request, "members/register.html", context)
+def register(response):
+	if response.method == "POST":
+		register_form = UserForm(response.POST)
+		if register_form.is_valid():
+			register_form.save()
+		return redirect("/")
+	else:
+		register_form = UserForm()
+	return render(response, "members/register.html", {'form': register_form})

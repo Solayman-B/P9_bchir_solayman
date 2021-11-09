@@ -16,7 +16,7 @@
      {% csrf_token %}
      {{ form.username }}
      {{ form.password }}
-     <button id="login" onclick="window.location.href = '/';">Se connecter</button>
+     <input type="submit" value="Se connecter">
  </form>
 {% for message in messages %}
 <p id="message">{{ message }}</p>

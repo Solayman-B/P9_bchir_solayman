@@ -11,8 +11,8 @@
      {% csrf_token %}
      {{ form.username }}
      {{ form.password }}
-     {{ form.password2 }}
-     <button id="inscription" onclick="window.location.href = '/';">S'inscrire</button>
+     {{ form.password }}
+     <input type="submit" value="S'inscrire">
  </form>
 </div>
 {% endblock %}
