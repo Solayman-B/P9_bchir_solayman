@@ -36,7 +36,7 @@ INSTALLED_APPS = [
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
 	'content',
-	'members',
+	'accounts',
 ]
 
 MIDDLEWARE = [
@@ -122,7 +122,6 @@ STATICFILES_DIRS = [BASE_DIR / "LITReview/static"]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'members.User'
+AUTH_USER_MODEL = 'accounts.User'
 
-LOGIN_REDIRECT_URL = "/content/"
-LOGOUT_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = 'content/'

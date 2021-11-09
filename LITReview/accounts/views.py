@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login as auth_login
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from members.forms import UserForm
+from accounts.forms import UserForm
 
 
 def login(request):
@@ -21,8 +21,9 @@ def login(request):
 				messages.info(request, 'Identifiant et/ou mot de passe invalide(s)')
 	print('pas coucou')
 	return render(
-		request, 'members/login.html', context={'form': login_form}
+		request, 'accounts/login.html', context={'form': login_form}
 	)
+
 
 
 def register(response):
@@ -33,4 +34,4 @@ def register(response):
 		return redirect("/")
 	else:
 		register_form = UserForm()
-	return render(response, "members/register.html", {'form': register_form})
+	return render(response, "accounts/register.html", {'form': register_form})
