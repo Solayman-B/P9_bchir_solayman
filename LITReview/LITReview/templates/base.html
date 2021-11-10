@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+{% if not request.user.is_authenticated and 'login' not in url and 'register' not in url  %}
+    <meta http-equiv="Refresh" content="0; accounts/login/" />
+{% endif %}
 {% load static %}
 <html lang="fr">
 <head>
@@ -13,10 +16,10 @@
         </p>
         <nav id="menu">
               <ul>
-                <li><a href="/content">Flux</a></li>
-                <li><a href="/content/posts">Posts</a></li>
-                <li><a href="/content/follow">Abonnements</a></li>
-                <li><a href="/logout">Se déconnecter</a></li>
+                <li><a href="/">Flux</a></li>
+                <li><a href="/posts">Posts</a></li>
+                <li><a href="/follow">Abonnements</a></li>
+                <li><a href="/accounts/logout">Se déconnecter</a></li>
               </ul>
         </nav>
     </div>

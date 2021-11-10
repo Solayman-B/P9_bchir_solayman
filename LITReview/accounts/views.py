@@ -4,7 +4,7 @@ from django.contrib import messages
 from accounts.forms import UserForm
 
 
-def login(request):
+"""def login(request):
 	login_form = UserForm()
 	if request.method == 'POST':
 		login_form = UserForm(request.POST)
@@ -22,7 +22,7 @@ def login(request):
 	print('pas coucou')
 	return render(
 		request, 'accounts/login.html', context={'form': login_form}
-	)
+	)"""
 
 
 
