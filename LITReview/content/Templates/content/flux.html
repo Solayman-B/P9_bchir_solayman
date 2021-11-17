@@ -1,15 +1,21 @@
 {% extends 'base.html' %}
+{% if request.user.is_authenticated %}
 
-{% block title %}
-    Mon flux
-{% endblock %}
+    {% block title %}
+        Mon flux
+    {% endblock %}
 
-{% block content_box_3 %}
- <div class="box_3">
-   <p>
-       {{ message }}
-       <button id="ticket" onclick="window.location.href = '/content/ticket';">Demander une critique</button>
-       <button id="review" onclick="window.location.href = '/content/review';">Créer une critique</button>
-   </p>
-</div>
-{% endblock %}
+    {% block content_box_3 %}
+     <div class="box_3">
+       <p>
+           {{ message }}
+           <button id="ticket" onclick="window.location.href = '/ticket';">Demander une critique</button>
+           <button id="review" onclick="window.location.href = '/review';">Créer une critique</button>
+       </p>
+    </div>
+    {% endblock %}
+{% else %}
+    <p>Accès refusé vous devez d'abord vous connecter</p>
+    <meta http-equiv="Refresh" content="5000; accounts/login/" />
+{% endif %}
+

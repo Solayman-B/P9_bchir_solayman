@@ -4,9 +4,11 @@ from django.db import models
 
 
 class Ticket(models.Model):
-    # Your Ticket model definition goes here
-    pass
+    title = models.CharField(max_length=55)
+    content = models.TextField()
 
+    def __str__(self):
+        return self.title
 
 class Review(models.Model):
     ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE)
@@ -24,7 +26,7 @@ class UserFollows(models.Model):
     # Your UserFollows model definition goes here
 
     class Meta:
-        pass
+        verbose_name_plural = 'User Follows'
         # ensures we don't get multiple UserFollows instances
         # for unique user-user_followed pairs
         #unique_together = ('user', 'followed_user', )

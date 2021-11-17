@@ -54,7 +54,7 @@ ROOT_URLCONF = 'LITReview.urls'
 TEMPLATES = [
 	{
 		'BACKEND': 'django.template.backends.django.DjangoTemplates',
-		'DIRS': [os.path.join(BASE_DIR, "LITReview/templates/")],
+		'DIRS': [BASE_DIR / "LITReview/templates/"],
 		'APP_DIRS': True,
 		'OPTIONS': {
 			'context_processors': [
@@ -124,4 +124,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'
 
-LOGIN_REDIRECT_URL = 'flux/'
+LOGIN_REDIRECT_URL = '/'

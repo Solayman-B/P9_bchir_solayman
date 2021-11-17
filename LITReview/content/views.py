@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from .models import Ticket
 
 
 @login_required
@@ -34,4 +35,9 @@ def posts(request):
 
 @login_required
 def ticket(request):
-	return render(request, "content/ticket.html")
+	tickets = Ticket.objects.all()
+
+	context = {
+		'tickets': tickets
+	}
+	return render(request, "content/ticket.html", context)

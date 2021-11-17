@@ -20,6 +20,7 @@
                 <li><a href="/posts">Posts</a></li>
                 <li><a href="/follow">Abonnements</a></li>
                 <li><a href="/accounts/logout">Se déconnecter</a></li>
+                  {{ request.user.is_authenticated }}
               </ul>
         </nav>
     </div>
