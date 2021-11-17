@@ -14,15 +14,16 @@
         <p>
         LITReview
         </p>
+        {% if request.user.is_authenticated %}
         <nav id="menu">
               <ul>
                 <li><a href="/">Flux</a></li>
                 <li><a href="/posts">Posts</a></li>
                 <li><a href="/follow">Abonnements</a></li>
                 <li><a href="/accounts/logout">Se déconnecter</a></li>
-                  {{ request.user.is_authenticated }}
               </ul>
         </nav>
+        {% endif %}
     </div>
     <div id="box_2">
         {% block content_box_3 %}{% endblock %}

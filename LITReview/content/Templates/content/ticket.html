@@ -9,5 +9,12 @@
    <p>
        Créer un ticket
    </p>
+       <ul>
+           {% for ticket in tickets %}
+           <li>
+           {{ ticket.title }}
+           </li>
+           {% endfor %}
+       </ul>
 </div>
 {% endblock %}
