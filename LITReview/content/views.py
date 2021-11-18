@@ -5,7 +5,12 @@ from .models import Ticket
 
 @login_required
 def flux(request):
-	return render(request, "content/flux.html")
+	tickets = Ticket.objects.all()
+
+	context = {
+		'tickets': tickets
+	}
+	return render(request, "content/flux.html", context)
 
 
 @login_required
@@ -35,9 +40,4 @@ def posts(request):
 
 @login_required
 def ticket(request):
-	tickets = Ticket.objects.all()
-
-	context = {
-		'tickets': tickets
-	}
-	return render(request, "content/ticket.html", context)
+	return render(request, "content/ticket.html")
