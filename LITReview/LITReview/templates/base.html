@@ -26,16 +26,16 @@
             <div class="collapse navbar-collapse" id="navbarText">
               <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                  <a class="nav-link text-dark" href="/">Flux</a>
+                  <a class="nav-link text-dark" href="{% url 'content:flux' %}">Flux</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link text-dark" href="/posts">Posts</a>
+                  <a class="nav-link text-dark" href="{% url 'content:posts' %}">Posts</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link text-dark" href="/follow">Abonnements</a>
+                  <a class="nav-link text-dark" href="{% url 'content:follow' %}">Abonnements</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link text-dark" href="/accounts/logout">Se déconnecter</a>
+                  <a class="nav-link text-dark" href="{% url 'accounts:logout' %}">Se déconnecter</a>
                 </li>
               </ul>
             </div>
