@@ -1,5 +1,7 @@
 from django import forms
+from .models import Ticket
 
-class Ticket(forms.ModelForm):
+class TicketForm(forms.ModelForm):
 	class Meta:
-		fields = ['title', 'content']
+		model = Ticket
+		fields = '__all__'

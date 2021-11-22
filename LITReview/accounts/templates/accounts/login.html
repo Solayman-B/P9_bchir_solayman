@@ -7,7 +7,9 @@
 {% block content_box_3 %}
     <div id="box_inscription">
     <h1>Inscrivez-vous maintenant</h1>
-    <button id="register" onclick="window.location.href = {% url 'accounts:register' %};">S'incrire</button>
+        <p>
+    <button id="register" onclick="window.location.href = '{% url 'accounts:register' %}';">S'incrire</button>
+        </p>
     </div>
 <div id="box_connection">
  <h1>Connectez-vous</h1>
@@ -18,8 +20,5 @@
      {{ form.password }}
      <input type="submit" value="Se connecter">
  </form>
-{% for message in messages %}
-<p id="message">{{ message }}</p>
-{% endfor %}
 </div>
 {% endblock content_box_3 %}

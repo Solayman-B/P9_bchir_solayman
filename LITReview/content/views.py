@@ -1,11 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Ticket
+from .forms import TicketForm
 
 
 @login_required
 def flux(request):
-	tickets = Ticket.objects.all()
+	tickets = Ticket.objects.order_by('-id').all()
+	#tickets = Ticket.objects.filter(id = request.user.id)
 
 	context = {
 		'tickets': tickets
@@ -40,4 +42,15 @@ def posts(request):
 
 @login_required
 def ticket(request):
-	return render(request, "content/ticket.html")
+	if request.method == 'POST':
+		form = TicketForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return redirect('content:flux')
+	else:
+		form = TicketForm()
+
+	context = {
+		'form': form,
+	}
+	return render(request, "content/ticket.html", context)
