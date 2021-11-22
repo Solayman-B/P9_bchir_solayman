@@ -4,11 +4,11 @@ from django.db import models
 
 
 class Ticket(models.Model):
-    Titre = models.CharField(max_length=55)
-    Description = models.TextField()
+    title = models.CharField(max_length=55)
+    content = models.TextField()
 
     def __str__(self):
-        return self.Titre
+        return self.title
 
 class Review(models.Model):
     ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE)

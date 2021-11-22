@@ -6,8 +6,39 @@
 
 {% block content_box_3 %}
  <div class="box_3">
-   <p>
-       Créer un ticket
-   </p>
+     <div class="container">
+         <div class="row">
+             <div class="col-md-8 mx-auto">
+                <form method="post">
+                   <h3 class="mx-auto" style="width: 200px;">
+                       Créer un ticket
+                   </h3>
+                     {% if form.subject.errors %}
+                         {% for error in form.subject.errors %}
+                             <p class="text-danger"><strong>{{ error }}</strong></p>
+                         {% endfor %}
+                     {% endif %}
+                     {% csrf_token %}
+                     {% for field in form %}
+                        <div class="form-group">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.help_text %}
+                                <p class="help"> {{ field.help_text }}</p>
+                            {% endif %}
+                            {% if field.errors %}
+                                {% for error in field.errors %}
+                                    <p class="text-danger"><strong>{{ error }}</strong></p>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                     {% endfor %}
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <input type="submit" class="btn btn-outline-secondary" value="Envoyer">
+                    </div>
+                 </form>
+             </div>
+         </div>
+     </div>
 </div>
 {% endblock content_box_3 %}
