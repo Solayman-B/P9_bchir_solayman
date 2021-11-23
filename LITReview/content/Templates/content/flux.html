@@ -4,16 +4,16 @@
 {% endblock title %}
 
 {% block content_box_3 %}
- <div>
-   <p>
-       <button id="ticket" onclick="window.location.href = {% url 'content:ticket' %};">Demander une critique</button>
-       <button id="review" onclick="window.location.href = {% url 'content:review' %};">Créer une critique</button>
-   </p>
+ <div class="container col-md-4 justify-content-center">
+       <button class="btn btn-outline-secondary" onclick="window.location.href = {% url 'content:ticket' %};">Demander une critique</button>
+       <button class="btn btn-outline-secondary" onclick="window.location.href = {% url 'content:review' %};">Créer une critique</button>
+ </div>
+<div class="container col-md-8 mx-auto">
        {% for ticket in tickets %}
            <div class="card">
               <div class="card-body">
-                <h5 class="card-title">{{ ticket.Titre }}</h5>
-                <p class="card-text">{{ ticket.Description }}</p>
+                <h5 class="card-title">{{ ticket.title }}</h5>
+                <p class="card-text">{{ ticket.content }}</p>
                   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <a href="{% url 'content:review' %}" class="btn btn-outline-secondary me-md-2">Créer une critique</a>
                   </div>
@@ -21,7 +21,6 @@
             </div>
 
        {% endfor %}
-     </div>
-</div>
+ </div>
 {% endblock content_box_3 %}
 
