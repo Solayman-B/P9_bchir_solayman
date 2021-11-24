@@ -5,12 +5,15 @@
 {% endblock title %}
 
 {% block content_box_3 %}
- <div class="box_3">
-    <p>Inscrivez vous</p>
- <form method="POST">
-     {% csrf_token %}
-     {{ form.as_p }}
-     <input type="submit" value="S'inscrire">
- </form>
+ <div class="container col-md-4 justify-content-center">
+    <h3>Inscrivez vous</h3>
+     <form method="POST">
+         {% csrf_token %}
+         {{ form.as_p }}
+         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+         <button class="btn btn-outline-secondary" onclick="window.location.href = '{% url 'accounts:login' %}';">Retourner</button>
+         <input class="btn btn-outline-secondary" type="submit" value="S'inscrire">
+         </div>
+     </form>
 </div>
 {% endblock content_box_3 %}

@@ -15,33 +15,31 @@
 
 </head>
 <body>
-    <div id="box">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
+    <div class="container-fluid border border-dark">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <h3 class="mx-auto" style="width: 1px;">LITReview</h3>
-        {% if request.user.is_authenticated %}
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarText">
-              <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <a class="nav-link text-dark" href="{% url 'content:flux' %}">Flux</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link text-dark" href="{% url 'content:posts' %}">Posts</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link text-dark" href="{% url 'content:follow' %}">Abonnements</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link text-dark" href="{% url 'accounts:logout' %}">Se déconnecter</a>
-                </li>
-              </ul>
-            </div>
-        </div>
-    {% endif %}
-    </nav>
+            {% if request.user.is_authenticated %}
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                    <div class="collapse navbar-collapse" id="navbarText">
+                          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                              <a class="nav-link text-dark" href="{% url 'content:flux' %}">Flux</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link text-dark" href="{% url 'content:posts' %}">Posts</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link text-dark" href="{% url 'content:follow' %}">Abonnements</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link text-dark" href="{% url 'accounts:logout' %}">Se déconnecter</a>
+                            </li>
+                          </ul>
+                    </div>
+            {% endif %}
+        </nav>
     </div>
     <div id="box_2">
         {% block content_box_3 %}{% endblock content_box_3 %}
