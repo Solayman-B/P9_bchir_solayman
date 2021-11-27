@@ -6,8 +6,7 @@ from .forms import TicketForm
 
 @login_required
 def flux(request):
-	tickets = Ticket.objects.order_by('-id').all()
-	#tickets = Ticket.objects.filter(id = request.user.id)
+	tickets = Ticket.objects.order_by('-id').filter(user_id=request.user.id)
 
 	context = {
 		'tickets': tickets
@@ -45,7 +44,8 @@ def ticket(request):
 	if request.method == 'POST':
 		form = TicketForm(request.POST)
 		if form.is_valid():
-			form.save()
+			ticket = Ticket(user_id= request.user.pk, title= request.POST.get('title'), description= request.POST.get('description'))
+			ticket.save()
 			return redirect('content:flux')
 	else:
 		form = TicketForm()

@@ -5,17 +5,17 @@ Suivre d'autres utilisateurs
 {% endblock title %}
 
 {% block content_box_3 %}
- <div class="box_3">
-   <p>Suivre d'autres utilisateurs</p>
+  <div class="container col-md-4 justify-content-center">
+   <h3>Suivre d'autres utilisateurs</h3>
      <div>
 
      <form method="post", action="">
      {% csrf_token %}
      {{ form.username }}
-     <button>Envoyer</button>
+     <button class="btn btn-outline-secondary">Envoyer</button>
      </form>
      </div>
-    <p>Abonnements</p>
-    <p>Abonnés</p>
+    <h3>Abonnements</h3>
+    <h3>Abonnés</h3>
 </div>
 {% endblock content_box_3 %}

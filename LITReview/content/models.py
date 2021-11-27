@@ -4,8 +4,12 @@ from django.db import models
 
 
 class Ticket(models.Model):
-    title = models.CharField(max_length=55)
-    content = models.TextField()
+    title = models.CharField(max_length=128)
+    description = models.TextField(max_length=2048, blank=True)
+    user = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    time_created = models.DateTimeField(auto_now_add=True)
+
 
     def __str__(self):
         return self.title
@@ -24,9 +28,13 @@ class Review(models.Model):
 
 class UserFollows(models.Model):
     # Your UserFollows model definition goes here
+    user = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='following')
+    followed_user = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='followed_by')
 
     class Meta:
         verbose_name_plural = 'User Follows'
         # ensures we don't get multiple UserFollows instances
         # for unique user-user_followed pairs
-        #unique_together = ('user', 'followed_user', )
+        unique_together = ('user', 'followed_user', )
