@@ -5,9 +5,40 @@
 {% endblock title %}
 
 {% block content_box_3 %}
- <div class="container col-md-4 justify-content-center">
-   <h3>
-       Créer une critique
-   </h3>
+<div class="box_3">
+     <div class="container">
+         <div class="row">
+             <div class="col-md-8 mx-auto">
+                <form method="post", action="">
+                    {% csrf_token %}
+                   <h3 class="mx-auto" style="width: 400px;">
+                       Créer une critique
+                   </h3>
+                    <div class="container border border-dark">
+                        <p>Livre / Article</p>
+                        <div class="row">
+                                {{ form.title.label }}
+                                {{ form.title }}
+                                {{ form.description.label }}
+                                {{ form.description }}
+                        </div>
+                    </div>
+
+                    <div class="container border border-dark">
+                        <p>Critique</p>
+                        <div class="row">{{ form.headline.label }}</div>
+                        <div class="row">{{ form.headline }}</div>
+                        <div class="row">{{ form.rating.label }}</div>
+                        <div class="row">{{ form.rating }}</div>
+                        <div class="row">{{ form.body.label }}</div>
+                        <div class="row">{{ form.body }}</div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <input type="submit" class="btn btn-outline-secondary" value="Envoyer">
+                        </div>
+                    </div>
+                </form>
+             </div>
+         </div>
+     </div>
 </div>
 {% endblock content_box_3 %}

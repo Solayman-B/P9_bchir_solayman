@@ -10,4 +10,5 @@ urlpatterns = [
     path('modify_ticket/', views.modify_ticket, name='modify_ticket'),
     path('posts/', views.posts, name='posts'),
     path('ticket/', views.ticket, name='ticket'),
+    path('user_autocomplete/', views.user_autocomplete, name='user_autocomplete'),
 ]

@@ -1,8 +1,10 @@
+from dal import autocomplete
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Ticket, Review
-from .forms import TicketForm, ReviewForm
 
+from accounts.admin import User
+from .models import Ticket, Review
+from .forms import TicketForm, ReviewForm, UserFollowsForm
 
 @login_required
 def flux(request):
@@ -20,11 +22,11 @@ def review(request):
 		form = ReviewForm(request.POST)
 		if form.is_valid():
 			#si on clique sur créer une critique d'un ticket, rechercher instance du ticket l'attribuer à la critique
-			review = Review.objects.create(user_id= request.user.pk, headline= request.POST.get('headline'), body= request.POST.get('body'))
+			#review = Review.objects.create(user_id= request.user.pk, headline= request.POST.get('headline'), body= request.POST.get('body'))
 
 			#si le ticket n'existe pas
-			#review = Review(user_id= request.user.pk, headline= request.POST.get('headline'), body= request.POST.get('body'))
-			#review.save()
+			review = Review(user_id= request.user.pk, headline= request.POST.get('headline'), body= request.POST.get('body'))
+			review.save()
 			return redirect('content:flux')
 	else:
 		form = ReviewForm()
@@ -38,8 +40,29 @@ def review(request):
 
 @login_required
 def follow(request):
-	return render(request, "content/follow.html")
+	if request.method == 'POST':
+		form = UserFollowsForm(request.POST)
 
+	else:
+		form = UserFollowsForm()
+	context = {
+		'form': form,
+	}
+	return render(request, "content/follow.html", context)
+
+@login_required
+class user_autocomplete(autocomplete.Select2QuerySetView):
+	def get_queryset(self):
+		# Don't forget to filter out results depending on the visitor !
+		if not self.request.user.is_authenticated:
+			return User.objects.none()
+
+		qs = User.objects.all()
+
+		if self.q:
+			qs = qs.filter(name__istartswith=self.q)
+
+		return qs
 
 @login_required
 def modify_review(request):
