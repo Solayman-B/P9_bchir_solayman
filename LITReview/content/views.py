@@ -22,10 +22,10 @@ def review(request):
 		form = ReviewForm(request.POST)
 		if form.is_valid():
 			#si on clique sur créer une critique d'un ticket, rechercher instance du ticket l'attribuer à la critique
-			#review = Review.objects.create(user_id= request.user.pk, headline= request.POST.get('headline'), body= request.POST.get('body'))
+			review = Review.objects.create(user_id= request.user.pk, headline= request.POST.get('headline'), body= request.POST.get('body'))
 
 			#si le ticket n'existe pas
-			review = Review(user_id= request.user.pk, headline= request.POST.get('headline'), body= request.POST.get('body'))
+			#review = Review(user_id= request.user.pk, headline= request.POST.get('headline'), body= request.POST.get('body'))
 			review.save()
 			return redirect('content:flux')
 	else:
@@ -36,6 +36,8 @@ def review(request):
 	}
 
 	return render(request, "content/review.html", context)
+
+
 
 
 @login_required
@@ -58,7 +60,7 @@ class user_autocomplete(autocomplete.Select2QuerySetView):
 			return User.objects.none()
 
 		qs = User.objects.all()
-
+		print(self.q)
 		if self.q:
 			qs = qs.filter(name__istartswith=self.q)
 
@@ -94,3 +96,27 @@ def ticket(request):
 		'form': form,
 	}
 	return render(request, "content/ticket.html", context)
+
+@login_required
+def ticket_review(request, id):
+	if request.method == 'POST':
+		form = ReviewForm(request.POST)
+		print(form.errors)
+		if form.is_valid():
+			#si on clique sur créer une critique d'un ticket, rechercher instance du ticket l'attribuer à la critique
+			review = Review.objects.create(user_id= request.user.pk, headline= form.cleaned_data.get('headline'),
+										   rating=form.cleaned_data.get('rating'),
+										   body= form.cleaned_data.get('body'), ticket_id=id)
+
+			#si le ticket n'existe pas
+			#review = Review(user_id= request.user.pk, headline= request.POST.get('headline'), body= request.POST.get('body'))
+			#review.save()
+			return redirect('content:flux')
+	else:
+		form = ReviewForm()
+
+	context = {
+		'form': form,
+	}
+
+	return render(request, "content/review.html", context)

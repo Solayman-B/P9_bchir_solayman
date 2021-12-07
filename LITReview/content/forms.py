@@ -12,12 +12,10 @@ class TicketForm(forms.ModelForm):
 		fields = ['title', 'description']
 
 
+
 class ReviewForm(forms.ModelForm):
-	title = Ticket.reviews
-	description = forms.CharField(label='Description', widget=forms.Textarea(attrs={'class': 'form-control', }))
 	headline = forms.CharField(label='Titre')
 	rating = forms.ChoiceField(choices=[(i, i) for i in range(0, 6)], widget=forms.RadioSelect())
-	edit_review = forms.BooleanField(widget=forms.HiddenInput, initial=True)
 	body = forms.CharField(label='Commentaire')
 
 	class Meta:
