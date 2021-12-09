@@ -1,44 +1,81 @@
-from dal import autocomplete
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 from accounts.admin import User
 from .models import Ticket, Review
-from .forms import TicketForm, ReviewForm, UserFollowsForm
+from .forms import TicketForm, ReviewForm, UserFollowsForm, TicketDetailForm
 
 @login_required
-def flux(request):
-	tickets = Ticket.objects.order_by('-id').filter(user_id=request.user.id)
+def ticket(request):
+	if request.method == 'POST':
+		form = TicketForm(request.POST)
+		if form.is_valid():
+			ticket = Ticket(user_id=request.user.pk, title=request.POST.get('title'),
+							description=request.POST.get('description'))
+			ticket.save()
+			return redirect('content:flux')
+	else:
+		form = TicketForm()
+
+	context = {'form': form}
+
+	return render(request, "content/ticket.html", context)
+
+@login_required
+def ticket_detail(request, ticket_id):
+	ticket = Ticket.objects.get(id=ticket_id)
+
+
+	if request.method == 'POST':
+		form = ReviewForm(request.POST)
+		if form.is_valid():
+			review = Review.objects.create(user_id=request.user.pk,
+										   title = ticket.title,
+										   description = ticket.description,
+										   headline=request.POST.get('headline'),
+										   rating=form.cleaned_data.get('rating'),
+										   body=request.POST.get('body'))
+			return redirect('content:flux')
+	else:
+		form = ReviewForm()
 
 	context = {
-		'tickets': tickets
+		'ticket': ticket,
+		'form': form
 	}
-	return render(request, "content/flux.html", context)
 
+	return render(request, "content/ticket_detail.html", context)
 
 @login_required
 def review(request):
 	if request.method == 'POST':
 		form = ReviewForm(request.POST)
 		if form.is_valid():
-			#si on clique sur créer une critique d'un ticket, rechercher instance du ticket l'attribuer à la critique
-			review = Review.objects.create(user_id= request.user.pk, headline= request.POST.get('headline'), body= request.POST.get('body'))
-
-			#si le ticket n'existe pas
-			#review = Review(user_id= request.user.pk, headline= request.POST.get('headline'), body= request.POST.get('body'))
-			review.save()
+			review = Review.objects.create(user_id=request.user.pk,
+										   headline=request.POST.get('headline'),
+										   rating=form.cleaned_data.get('rating'),
+										   body=request.POST.get('body'))
 			return redirect('content:flux')
 	else:
 		form = ReviewForm()
 
-	context = {
-		'form': form,
-	}
+	context = {'form': form}
 
 	return render(request, "content/review.html", context)
 
 
+@login_required
+def flux(request):
+	tickets = Ticket.objects.order_by('-id').filter(user_id=request.user.id)
 
+	reviews = Review.objects.order_by('-id').filter(user_id=request.user.id)
+
+	context = {
+		'tickets': tickets,
+		'reviews': reviews
+			   }
+
+	return render(request, "content/flux.html", context)
 
 @login_required
 def follow(request):
@@ -47,24 +84,11 @@ def follow(request):
 
 	else:
 		form = UserFollowsForm()
-	context = {
-		'form': form,
-	}
+
+	context = {'form': form}
+
 	return render(request, "content/follow.html", context)
 
-@login_required
-class user_autocomplete(autocomplete.Select2QuerySetView):
-	def get_queryset(self):
-		# Don't forget to filter out results depending on the visitor !
-		if not self.request.user.is_authenticated:
-			return User.objects.none()
-
-		qs = User.objects.all()
-		print(self.q)
-		if self.q:
-			qs = qs.filter(name__istartswith=self.q)
-
-		return qs
 
 @login_required
 def modify_review(request):
@@ -79,44 +103,3 @@ def modify_ticket(request):
 @login_required
 def posts(request):
 	return render(request, "content/posts.html")
-
-
-@login_required
-def ticket(request):
-	if request.method == 'POST':
-		form = TicketForm(request.POST)
-		if form.is_valid():
-			ticket = Ticket(user_id= request.user.pk, title= request.POST.get('title'), description= request.POST.get('description'))
-			ticket.save()
-			return redirect('content:flux')
-	else:
-		form = TicketForm()
-
-	context = {
-		'form': form,
-	}
-	return render(request, "content/ticket.html", context)
-
-@login_required
-def ticket_review(request, id):
-	if request.method == 'POST':
-		form = ReviewForm(request.POST)
-		print(form.errors)
-		if form.is_valid():
-			#si on clique sur créer une critique d'un ticket, rechercher instance du ticket l'attribuer à la critique
-			review = Review.objects.create(user_id= request.user.pk, headline= form.cleaned_data.get('headline'),
-										   rating=form.cleaned_data.get('rating'),
-										   body= form.cleaned_data.get('body'), ticket_id=id)
-
-			#si le ticket n'existe pas
-			#review = Review(user_id= request.user.pk, headline= request.POST.get('headline'), body= request.POST.get('body'))
-			#review.save()
-			return redirect('content:flux')
-	else:
-		form = ReviewForm()
-
-	context = {
-		'form': form,
-	}
-
-	return render(request, "content/review.html", context)

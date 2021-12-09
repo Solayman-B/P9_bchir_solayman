@@ -13,26 +13,8 @@
                    <h3 class="mx-auto" style="width: 200px;">
                        Créer un ticket
                    </h3>
-                     {% if form.subject.errors %}
-                         {% for error in form.subject.errors %}
-                             <p class="text-danger"><strong>{{ error }}</strong></p>
-                         {% endfor %}
-                     {% endif %}
                      {% csrf_token %}
-                     {% for field in form %}
-                        <div class="form-group">
-                            {{ field.label_tag }}
-                            {{ field }}
-                            {% if field.help_text %}
-                                <p class="help"> {{ field.help_text }}</p>
-                            {% endif %}
-                            {% if field.errors %}
-                                {% for error in field.errors %}
-                                    <p class="text-danger"><strong>{{ error }}</strong></p>
-                                {% endfor %}
-                            {% endif %}
-                        </div>
-                     {% endfor %}
+                     {{ form.as_p }}
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <input type="submit" class="btn btn-outline-secondary" value="Envoyer">
                     </div>

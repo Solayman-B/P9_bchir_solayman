@@ -15,13 +15,16 @@
                        Créer une critique
                    </h3>
                     <div class="container border border-dark">
-                        <p>Livre / Article</p>
-                        <div class="row">
-                                {{ form.title.label }}
-                                {{ form.title }}
-                                {{ form.description.label }}
-                                {{ form.description }}
-                        </div>
+                        <p>Vous en en train de poster en réponse à</p>
+                         <div class="card">
+              <div class="card-body">
+                <p class="card-text">{{ ticket.user }} a demandé(e) une critique <span style="float:right;">{{ ticket.time_created }}</span></p>
+                <p class="card-text">{{ ticket.title }}</p>
+                <p class="card-text">{{ ticket.description }}</p>
+                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                  </div>
+              </div>
+            </div>
                     </div>
 
                     <div class="container border border-dark">

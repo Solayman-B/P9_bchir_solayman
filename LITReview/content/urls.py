@@ -10,7 +10,5 @@ urlpatterns = [
     path('modify_ticket/', views.modify_ticket, name='modify_ticket'),
     path('posts/', views.posts, name='posts'),
     path('ticket/', views.ticket, name='ticket'),
-    #path('ticket/<int:id>/', views.ticket_detail, name='ticket_detail'),
-    path('ticket/<int:id>/review/', views.ticket_review, name='ticket_review'),
-    path('user_autocomplete/', views.user_autocomplete, name='user_autocomplete'),
+    path('ticket/<int:ticket_id>/', views.ticket_detail, name='ticket_detail')
 ]

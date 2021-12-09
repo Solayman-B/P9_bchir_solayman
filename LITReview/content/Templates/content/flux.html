@@ -12,15 +12,30 @@
        {% for ticket in tickets %}
            <div class="card">
               <div class="card-body">
-                <h5 class="card-title">{{ ticket.title }}</h5>
-                <p class="card-text">{{ ticket.content }}</p>
+                <p class="card-text">{{ ticket.user }} a demandé(e) une critique <span style="float:right;">{{ ticket.time_created }}</span></p>
+                <p class="card-text">{{ ticket.title }}</p>
+                <p class="card-text">{{ ticket.description }}</p>
                   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <a href="{% url 'content:review' %}" class="btn btn-outline-secondary me-md-2">Créer une critique</a>
+                    <a href="{% url 'content:ticket_detail' ticket.id %}" class="btn btn-outline-secondary me-md-2">Créer une critique</a>
                   </div>
               </div>
             </div>
 
        {% endfor %}
+
+        {% for review in reviews %}
+                   <div class="card">
+                      <div class="card-body">
+                        <p class="card-text">{{ review.user }} a publié(e) une critique <span style="float:right;">{{ review.time_created }}</span></p>
+                        <p class="card-text">{{ review.rating }} étoiles</p>
+                        <p class="card-text">{{ review.headline }}</p>
+                          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                          </div>
+                      </div>
+                    </div>
+
+               {% endfor %}
+
  </div>
 {% endblock content_box_3 %}
 
