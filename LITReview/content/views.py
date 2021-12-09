@@ -30,8 +30,6 @@ def ticket_detail(request, ticket_id):
 		form = ReviewForm(request.POST)
 		if form.is_valid():
 			review = Review.objects.create(user_id=request.user.pk,
-										   title = ticket.title,
-										   description = ticket.description,
 										   headline=request.POST.get('headline'),
 										   rating=form.cleaned_data.get('rating'),
 										   body=request.POST.get('body'))
