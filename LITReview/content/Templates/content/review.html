@@ -17,16 +17,23 @@
                     <div class="container border border-dark">
                         <p>Livre / Article</p>
                         <div class="row">
-                                {{ form.title.label }}
-                                {{ form.title }}
-                                {{ form.description.label }}
-                                {{ form.description }}
+                                {{ ticket_form.title.label }}
+                                {{ ticket_form.title }}
+                                {{ ticket_form.description.label }}
+                                {{ ticket_form.description }}
                         </div>
                     </div>
 
                     <div class="container border border-dark">
                         <p>Critique</p>
-                        <div class="row">{{ form.as_p }}</div>
+                        <div class="row">
+                            {{ review_form.headline.label }}
+                            {{ review_form.headline }}
+                            {{ review_form.rating.label }}
+                            {{ review_form.rating }}
+                            {{ review_form.body.label }}
+                            {{ review_form.body }}
+                        </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <input type="submit" class="btn btn-outline-secondary" value="Envoyer">
                         </div>

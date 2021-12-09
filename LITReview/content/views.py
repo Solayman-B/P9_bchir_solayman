@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 from accounts.admin import User
-from .models import Ticket, Review
-from .forms import TicketForm, ReviewForm, UserFollowsForm, TicketDetailForm
+from .models import Ticket, Review, UserFollows
+from .forms import TicketForm, ReviewForm, UserFollowsForm
 
 @login_required
 def ticket(request):
@@ -30,9 +30,10 @@ def ticket_detail(request, ticket_id):
 		form = ReviewForm(request.POST)
 		if form.is_valid():
 			review = Review.objects.create(user_id=request.user.pk,
-										   headline=request.POST.get('headline'),
+										   headline=form.cleaned_data.get('headline'),
 										   rating=form.cleaned_data.get('rating'),
-										   body=request.POST.get('body'))
+										   body=form.cleaned_data.get('body'),
+										   ticket = ticket)
 			return redirect('content:flux')
 	else:
 		form = ReviewForm()
@@ -46,18 +47,30 @@ def ticket_detail(request, ticket_id):
 
 @login_required
 def review(request):
+
 	if request.method == 'POST':
-		form = ReviewForm(request.POST)
-		if form.is_valid():
+		review_form = ReviewForm(request.POST)
+		ticket_form = TicketForm(request.POST)
+
+		if review_form.is_valid() and ticket_form.is_valid():
+			ticket = Ticket.objects.create(user_id=request.user.pk, title=ticket_form.cleaned_data.get('title'),
+							description=ticket_form.cleaned_data.get('description'))
+
 			review = Review.objects.create(user_id=request.user.pk,
-										   headline=request.POST.get('headline'),
-										   rating=form.cleaned_data.get('rating'),
-										   body=request.POST.get('body'))
+										   headline=review_form.cleaned_data.get('headline'),
+										   rating=review_form.cleaned_data.get('rating'),
+										   body=review_form.cleaned_data.get('body'),
+										   ticket=ticket)
 			return redirect('content:flux')
 	else:
-		form = ReviewForm()
+		review_form = ReviewForm()
+		ticket_form = TicketForm()
 
-	context = {'form': form}
+
+	context = {
+		'review_form': review_form,
+		'ticket_form': ticket_form
+	}
 
 	return render(request, "content/review.html", context)
 
@@ -83,7 +96,12 @@ def follow(request):
 	else:
 		form = UserFollowsForm()
 
-	context = {'form': form}
+	user_following = UserFollows.objects.filter(user=request.user)
+
+	context = {
+		'form': form,
+		'user_following': user_following
+	}
 
 	return render(request, "content/follow.html", context)
 

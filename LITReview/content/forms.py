@@ -10,18 +10,15 @@ class TicketForm(forms.ModelForm):
 		model = Ticket
 		fields = ['title', 'description']
 
-class ReviewForm(forms.ModelForm):
+class TicketForm(forms.ModelForm):
 	title = forms.CharField(label='Titre', widget=forms.TextInput(attrs={'class': 'form-control', }))
 	description = forms.CharField(label='Description', widget=forms.Textarea(attrs={'class': 'form-control', }), required=False)
-	headline = forms.CharField(label='Titre', widget=forms.TextInput(attrs={'class': 'form-control', }))
-	rating = forms.ChoiceField(choices=[(i, i) for i in range(0, 6)], widget=forms.RadioSelect())
-	body = forms.CharField(label='Commentaire', widget=forms.Textarea(attrs={'class': 'form-control', }), required=False)
 
 	class Meta:
-		model = Review
-		fields = ['title', 'description', 'headline', 'rating', 'body']
+		model = Ticket
+		fields = ['title', 'description']
 
-class TicketDetailForm(forms.ModelForm):
+class ReviewForm(forms.ModelForm):
 	headline = forms.CharField(label='Titre', widget=forms.TextInput(attrs={'class': 'form-control', }))
 	rating = forms.ChoiceField(choices=[(i, i) for i in range(0, 6)], widget=forms.RadioSelect())
 	body = forms.CharField(label='Commentaire', widget=forms.Textarea(attrs={'class': 'form-control', }))
