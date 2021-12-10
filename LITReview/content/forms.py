@@ -1,15 +1,6 @@
 from django import forms
 from .models import Ticket, Review, UserFollows
 
-
-class TicketForm(forms.ModelForm):
-	title = forms.CharField(label='Titre', widget=forms.TextInput(attrs={'class': 'form-control', }))
-	description = forms.CharField(label='Description', widget=forms.Textarea(attrs={'class': 'form-control', }), required=False)
-
-	class Meta:
-		model = Ticket
-		fields = ['title', 'description']
-
 class TicketForm(forms.ModelForm):
 	title = forms.CharField(label='Titre', widget=forms.TextInput(attrs={'class': 'form-control', }))
 	description = forms.CharField(label='Description', widget=forms.Textarea(attrs={'class': 'form-control', }), required=False)
@@ -27,9 +18,8 @@ class ReviewForm(forms.ModelForm):
 		model = Review
 		fields = ['headline', 'rating', 'body']
 
-class UserFollowsForm(forms.ModelForm):
-	user = forms.CharField(label="", widget=forms.TextInput(attrs={'placeholder': "Nom d'utilisateur"}))
-	followed_user = forms.CharField(label="Abonnements", widget=forms.TextInput(attrs={'class': 'form-control', }))
+class SubscribingForm(forms.ModelForm):
+	followed_user = forms.CharField(label="", widget=forms.TextInput(attrs={'placeholder': "Nom d'utilisateur"}))
 	class Meta:
 		model = UserFollows
-		fields = ['user', 'followed_user']
+		fields = ['followed_user']

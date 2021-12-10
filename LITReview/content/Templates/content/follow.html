@@ -11,14 +11,32 @@ Suivre d'autres utilisateurs
 
      <form method="post", action="">
          {% csrf_token %}
-         {{ form.as_p }}
+         {{ subscribing_form.as_p }}
          <button class="btn btn-outline-secondary">Envoyer</button>
      </form>
      </div>
     <h3>Abonnements</h3>
-      user = {{ user }};
-      followed user = {{ followed_user }}
+  {% for followed in user_followed_by %}
+           <div class="card">
+              <div class="card-body">
+                <p class="card-text">{{ followed.user }}</p>
+                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a href="{% url 'content:follow' %}" class="btn btn-outline-secondary me-md-2">Se désabonner</a>
+                  </div>
+              </div>
+            </div>
+
+      {% endfor %}
     <h3>Abonnés</h3>
+      {% for following in user_following %}
+          <div class="card">
+              <div class="card-body">
+                <p class="card-text"> {{ following.followed_user }}</p>
+                   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                   </div>
+              </div>
+            </div>
+      {% endfor %}
 </div>
 {% endblock content_box_3 %}
 {% block javascript %}

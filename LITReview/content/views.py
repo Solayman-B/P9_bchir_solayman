@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 
 from accounts.admin import User
 from .models import Ticket, Review, UserFollows
-from .forms import TicketForm, ReviewForm, UserFollowsForm
+from .forms import TicketForm, ReviewForm, SubscribingForm
 
 @login_required
 def ticket(request):
@@ -91,16 +91,18 @@ def flux(request):
 @login_required
 def follow(request):
 	if request.method == 'POST':
-		form = UserFollowsForm(request.POST)
+		subscribing_form = SubscribingForm(request.POST)
 
 	else:
-		form = UserFollowsForm()
+		subscribing_form = SubscribingForm()
 
 	user_following = UserFollows.objects.filter(user=request.user)
+	user_followed_by = UserFollows.objects.filter(user=request.user)
 
 	context = {
-		'form': form,
-		'user_following': user_following
+		'subscribing_form': subscribing_form,
+		'user_following': user_following,
+		'user_followed_by': user_followed_by
 	}
 
 	return render(request, "content/follow.html", context)
