@@ -46,6 +46,15 @@ def ticket_detail(request, ticket_id):
 	return render(request, "content/ticket_detail.html", context)
 
 @login_required
+def ticket_update(request, ticket_id):
+	ticket = Ticket.objects.get(id=ticket_id)
+	form = TicketForm(instance=ticket)
+	context = {'form': form}
+
+	return render(request, "content/ticket_update.html", context)
+
+
+@login_required
 def review(request):
 
 	if request.method == 'POST':
@@ -92,6 +101,7 @@ def flux(request):
 def follow(request):
 	if request.method == 'POST':
 		subscribing_form = SubscribingForm(request.POST)
+		return redirect('content:flux')
 
 	else:
 		subscribing_form = SubscribingForm()
@@ -106,16 +116,6 @@ def follow(request):
 	}
 
 	return render(request, "content/follow.html", context)
-
-
-@login_required
-def modify_review(request):
-	return render(request, "content/modify_review.html")
-
-
-@login_required
-def modify_ticket(request):
-	return render(request, "content/modify_ticket.html")
 
 
 @login_required
