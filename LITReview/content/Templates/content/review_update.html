@@ -12,7 +12,7 @@
                 <form method="post", action="">
                     {% csrf_token %}
                    <h3 class="mx-auto" style="width: 400px;">
-                       Créer une critique
+                       Modifier ma critique
                    </h3>
                     <div class="container border border-dark">
                         <p>Vous en en train de poster en réponse à</p>
@@ -29,7 +29,14 @@
 
                     <div class="container border border-dark">
                         <p>Critique</p>
-                        <div class="row">{{ form.as_p }}</div>
+                        <div class="row">
+                            {{ form.headline.label }}
+                            {{ form.headline }}
+                            {{ form.rating.label }}
+                            {{ form.rating }}
+                            {{ form.body.label }}
+                            {{ form.body }}
+                        </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <input type="submit" class="btn btn-outline-secondary" value="Envoyer">
                         </div>
