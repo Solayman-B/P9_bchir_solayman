@@ -1,7 +1,5 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-
-from accounts.admin import User
 from .models import Ticket, Review, UserFollows
 from .forms import TicketForm, ReviewForm, SubscribingForm
 
@@ -149,4 +147,12 @@ def follow(request):
 
 @login_required
 def posts(request):
-	return render(request, "content/posts.html")
+	tickets = Ticket.objects.order_by('-id').filter(user_id=request.user.id)
+
+	reviews = Review.objects.order_by('-id').filter(user_id=request.user.id)
+
+	context = {
+		'tickets': tickets,
+		'reviews': reviews
+	}
+	return render(request, "content/posts.html", context)
