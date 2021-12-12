@@ -169,3 +169,16 @@ def ticket_delete(request, ticket_id):
 		'ticket':ticket
 	}
 	return render(request, "content/ticket_delete.html", context)
+
+@login_required
+def review_delete(request, review_id):
+	review = Review.objects.get(id = review_id)
+
+	if request.method == 'POST':
+		review.delete()
+		return redirect('content:posts')
+
+	context = {
+		'review':review
+	}
+	return render(request, "content/review_delete.html", context)

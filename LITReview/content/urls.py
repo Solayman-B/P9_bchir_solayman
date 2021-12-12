@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.flux, name='flux'),
     path('review/', views.review, name='review'),
     path('review/<int:review_id>/', views.review_update, name='review_update'),
+    path('review/<int:review_id>/delete/', views.review_delete, name='review_delete'),
     path('follow/', views.follow, name='follow'),
     path('posts/', views.posts, name='posts'),
     path('ticket/', views.ticket, name='ticket'),
