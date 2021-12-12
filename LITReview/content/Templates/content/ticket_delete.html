@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Suivre d'autres utilisateurs
+{% endblock title %}
+
+{% block content_box_3 %}
+  <div class="container col-md-4 justify-content-center">
+   <h3>Confirmation de suppression</h3>
+     <div>
+         <p>Êtes vous sûre de vouloir supprimer définitivement le ticket: {{ ticket.title }} ?</p>
+         <form action="" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Supprimer">
+        </form>
+    </div>
+{% endblock content_box_3 %}

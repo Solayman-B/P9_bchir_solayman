@@ -12,7 +12,7 @@
        {% for ticket in tickets %}
            <div class="card">
               <div class="card-body">
-                <p class="card-text">{{ ticket.user }} a demandé(e) une critique <span style="float:right;">{{ ticket.time_created }}</span></p>
+                <p class="card-text">{{ ticket.user }} a demandé(e) un ticket <span style="float:right;">{{ ticket.time_created }}</span></p>
                 <p class="card-text">{{ ticket.title }}</p>
                 <p class="card-text">{{ ticket.description }}</p>
                   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -29,8 +29,6 @@
                         <p class="card-text">{{ review.user }} a publié(e) une critique <span style="float:right;">{{ review.time_created }}</span></p>
                         <p class="card-text">{{ review.rating }} étoiles</p>
                         <p class="card-text">{{ review.headline }}</p>
-                          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                          </div>
                       </div>
                     </div>
 
