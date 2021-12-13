@@ -148,6 +148,21 @@ def follow(request):
 
 
 @login_required
+def unfollow(request, follow_id):
+	unfollow = UserFollows.objects.get(id=follow_id)
+
+	if request.method == 'POST':
+		unfollow.delete()
+		return redirect('content:follow')
+
+	context = {
+		'unfollow': unfollow,
+	}
+
+	return render(request, "content/unfollow.html", context)
+
+
+@login_required
 def posts(request):
 	tickets = Ticket.objects.order_by('-id').filter(user_id=request.user.id)
 

@@ -8,6 +8,7 @@ urlpatterns = [
     path('review/<int:review_id>/', views.review_update, name='review_update'),
     path('review/<int:review_id>/delete/', views.review_delete, name='review_delete'),
     path('follow/', views.follow, name='follow'),
+    path('unfollow/<int:follow_id>/', views.unfollow, name='unfollow'),
     path('posts/', views.posts, name='posts'),
     path('ticket/', views.ticket, name='ticket'),
     path('ticket/<int:ticket_id>/', views.ticket_detail, name='ticket_detail'),
