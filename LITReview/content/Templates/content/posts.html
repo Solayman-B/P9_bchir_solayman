@@ -33,7 +33,7 @@
                         <p class="card-text">{{ review.headline }}</p>
                           <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                <a href="{% url 'content:review_update' review.id %}" class="btn btn-outline-secondary me-md-2">Modifier</a>
-                               <a href="{% url 'content:posts' %}" class="btn btn-outline-secondary me-md-2">Supprimer</a>
+                               <a href="{% url 'content:review_delete' review.id %}" class="btn btn-outline-secondary me-md-2">Supprimer</a>
                           </div>
                       </div>
                     </div>

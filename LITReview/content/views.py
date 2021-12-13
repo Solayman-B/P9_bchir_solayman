@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Ticket, Review, UserFollows
-from .forms import TicketForm, ReviewForm, SubscribingForm
+from .forms import TicketForm, ReviewForm, UserFollowsForm
 
 
 @login_required
@@ -127,19 +127,21 @@ def flux(request):
 @login_required
 def follow(request):
 	if request.method == 'POST':
-		subscribing_form = SubscribingForm(request.POST)
+		subcribed_form = UserFollowsForm(request.POST)
+		if subcribed_form.is_valid():
+			subcribed_form.save()
 		return redirect('content:flux')
 
 	else:
-		subscribing_form = SubscribingForm()
+		subcribed_form = UserFollowsForm()
 
-	user_following = UserFollows.objects.filter(user=request.user)
-	user_followed_by = UserFollows.objects.filter(user=request.user)
+	subcribed = UserFollows.objects.filter(subcribed_id=request.user)
+	followers = UserFollows.objects.filter(followers_id=request.user)
 
 	context = {
-		'subscribing_form': subscribing_form,
-		'user_following': user_following,
-		'user_followed_by': user_followed_by
+		'subcribed_form': subcribed_form,
+		'subcribed': subcribed,
+		'followers': followers,
 	}
 
 	return render(request, "content/follow.html", context)
