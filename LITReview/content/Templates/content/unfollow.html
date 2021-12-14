@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Suivre d'autres utilisateurs
+Désabonnement
 {% endblock title %}
 
 {% block content_box_3 %}
   <div class="container col-md-4 justify-content-center">
-   <h3>Confirmation de suppression</h3>
+   <h3>Confirmation de désabonnement</h3>
      <div>
-         <p>Voulez vous arrêter de suivre l'utilisateur: {{ unfollow.subcribed }} ?</p>
+         <p>Voulez vous arrêter de suivre l'utilisateur: {{ unfollow.abonnements }} ?</p>
          <form action="" method="post">
         {% csrf_token %}
         <input type="submit" value="Supprimer">
