@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Ticket, Review, UserFollows
-from .forms import TicketForm, ReviewForm, UserFollowsForm
 from accounts.models import User
+from .models import Ticket, Review, UserFollows
+from .forms import TicketForm, ReviewForm
+#from itertools import chain
+from django.db.models import Q
+
 
 
 @login_required
@@ -110,16 +113,31 @@ def review_update(request, review_id):
 
 	return render(request, "content/review_update.html", context)
 
+def followed_users_tickets(users):
+	tickets = []
+	for user in users:
+		tickets.append(Ticket.objects.order_by('time_created').filter(user_id=user.abonnements_id))
+	return tickets
+
+def followed_users_reviews(users):
+	reviews = []
+	for user in users:
+		reviews.append(Review.objects.order_by('time_created').filter(user_id=user.abonnements_id))
+	return reviews
 
 @login_required
 def flux(request):
-	tickets = Ticket.objects.order_by('-id').filter(user_id=request.user.id)
-
-	reviews = Review.objects.order_by('-id').filter(user_id=request.user.id)
+	user_tickets = Ticket.objects.order_by('-time_created').filter(user_id=request.user.id)
+	user_reviews = Review.objects.order_by('-time_created').filter(user_id=request.user.id)
+	users = UserFollows.objects.filter(abonnes_id=request.user.id)
+	followed_tickets = followed_users_tickets(users)
+	followed_reviews = followed_users_reviews(users)
 
 	context = {
-		'tickets': tickets,
-		'reviews': reviews
+		'user_tickets': user_tickets,
+		'user_reviews': user_reviews,
+		'followed_tickets': followed_tickets,
+		'followed_reviews': followed_reviews
 	}
 
 	return render(request, "content/flux.html", context)
@@ -127,20 +145,15 @@ def flux(request):
 
 @login_required
 def follow(request):
+	if request.POST.get('search'):
+		users = User.objects.filter(username__iexact=request.POST.get('search'))
+		new_abonne = users.first()
+		userf = UserFollows.objects.create(abonnes=request.user, abonnements=new_abonne)
+
 	abonnes = UserFollows.objects.filter(abonnes_id=request.user)
 	abonnements = UserFollows.objects.filter(abonnements_id=request.user)
 
-	if request.method == 'POST':
-		user_form = UserFollowsForm(request.POST)
-		if user_form.is_valid():
-			user_form.save()
-		return redirect('content:flux')
-
-	else:
-		user_form = UserFollowsForm()
-
 	context = {
-		'user_form': user_form,
 		'abonnes': abonnes,
 		'abonnements': abonnements,
 	}

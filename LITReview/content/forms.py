@@ -19,7 +19,7 @@ class ReviewForm(forms.ModelForm):
 		fields = ['headline', 'rating', 'body']
 
 class UserFollowsForm(forms.ModelForm):
-	user = forms.CharField(label="", widget=forms.TextInput(attrs={'placeholder': "Nom d'utilisateur"}))
+	abonnements = forms.CharField(label="", widget=forms.TextInput(attrs={'placeholder': "Nom d'utilisateur"}))
 	class Meta:
 		model = UserFollows
-		fields = ['user']
+		fields = ['abonnements']
