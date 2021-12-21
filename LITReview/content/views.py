@@ -127,11 +127,13 @@ def flux(request):
 	user_tickets = user_tickets.annotate(content_type=Value('USER_TICKET', CharField()))
 	user_reviews = Review.objects.filter(user_id=request.user.id)
 	user_reviews = user_reviews.annotate(content_type=Value('USER_REVIEW', CharField()))
+	response_review = Review.objects.filter(ticket__in = Ticket.objects.filter(user_id=request.user.id))
+	response_review = response_review.annotate(content_type=Value('REVIEW', CharField()))
 	users = UserFollows.objects.filter(abonnes_id=request.user.id)
 	followed_objects = followed_users_objects(users)
 
 	posts = sorted(
-		chain(user_tickets, user_reviews, followed_objects),
+		chain(user_tickets, user_reviews, followed_objects, response_review),
 		key=lambda post: post.time_created,
 		reverse=True
 	)
