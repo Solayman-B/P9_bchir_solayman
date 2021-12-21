@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.db.models import CharField, Value
 from accounts.models import User
 from .models import Ticket, Review, UserFollows
 from .forms import TicketForm, ReviewForm
-#from itertools import chain
-from django.db.models import Q
+from itertools import chain
+#from django.db.models import Q
 
 
 
@@ -113,34 +114,29 @@ def review_update(request, review_id):
 
 	return render(request, "content/review_update.html", context)
 
-def followed_users_tickets(users):
-	tickets = []
+def followed_users_objects(users):
+	object = []
 	for user in users:
-		tickets.append(Ticket.objects.order_by('time_created').filter(user_id=user.abonnements_id))
-	return tickets
-
-def followed_users_reviews(users):
-	reviews = []
-	for user in users:
-		reviews.append(Review.objects.order_by('time_created').filter(user_id=user.abonnements_id))
-	return reviews
+		object.append(list(chain(Ticket.objects.filter(user_id=user.abonnements_id).annotate(content_type=Value('TICKET', CharField())), Review.objects.filter(user_id=user.abonnements_id).annotate(content_type=Value('REVIEW', CharField())))))
+	objects = list(chain.from_iterable(object))
+	return objects
 
 @login_required
 def flux(request):
-	user_tickets = Ticket.objects.order_by('-time_created').filter(user_id=request.user.id)
-	user_reviews = Review.objects.order_by('-time_created').filter(user_id=request.user.id)
+	user_tickets = Ticket.objects.filter(user_id=request.user.id)
+	user_tickets = user_tickets.annotate(content_type=Value('USER_TICKET', CharField()))
+	user_reviews = Review.objects.filter(user_id=request.user.id)
+	user_reviews = user_reviews.annotate(content_type=Value('USER_REVIEW', CharField()))
 	users = UserFollows.objects.filter(abonnes_id=request.user.id)
-	followed_tickets = followed_users_tickets(users)
-	followed_reviews = followed_users_reviews(users)
+	followed_objects = followed_users_objects(users)
 
-	context = {
-		'user_tickets': user_tickets,
-		'user_reviews': user_reviews,
-		'followed_tickets': followed_tickets,
-		'followed_reviews': followed_reviews
-	}
+	posts = sorted(
+		chain(user_tickets, user_reviews, followed_objects),
+		key=lambda post: post.time_created,
+		reverse=True
+	)
 
-	return render(request, "content/flux.html", context)
+	return render(request, "content/flux.html", context={'posts': posts})
 
 
 @login_required

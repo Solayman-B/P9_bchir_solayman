@@ -9,30 +9,51 @@
        <button class="btn btn-outline-secondary" onclick="window.location.href = {% url 'content:review' %};">Créer une critique</button>
  </div>
 <div class="container col-md-8 mx-auto">
-       {% for ticket in tickets %}
-           <div class="card">
-              <div class="card-body">
-                <p class="card-text">{{ ticket.user }} a demandé(e) un ticket <span style="float:right;">{{ ticket.time_created }}</span></p>
-                <p class="card-text">{{ ticket.title }}</p>
-                <p class="card-text">{{ ticket.description }}</p>
-                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <a href="{% url 'content:ticket_detail' ticket.id %}" class="btn btn-outline-secondary me-md-2">Créer une critique</a>
-                  </div>
-              </div>
-            </div>
+        {% for post in posts %}
+            {% if post.content_type == 'USER_TICKET' %}
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text">Vous avez demandé une critique <span style="float:right;">{{ post.time_created }}</span></p>
+                        <p class="card-text">{{ post.title }}</p>
+                        <p class="card-text">{{ post.description }}</p>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'content:ticket_detail' post.id %}" class="btn btn-outline-secondary me-md-2">Créer une critique</a>
+                        </div>
+                    </div>
+                </div>
 
-       {% endfor %}
-
-        {% for review in reviews %}
-                   <div class="card">
+            {% elif post.content_type == 'USER_REVIEW' %}
+                <div class="card">
                       <div class="card-body">
-                        <p class="card-text">{{ review.user }} a publié(e) une critique <span style="float:right;">{{ review.time_created }}</span></p>
-                        <p class="card-text">{{ review.rating }} étoiles</p>
-                        <p class="card-text">{{ review.headline }}</p>
+                        <p class="card-text">Vous avez publié une critique <span style="float:right;">{{ post.time_created }}</span></p>
+                        <p class="card-text">{{ post.rating }} étoiles</p>
+                        <p class="card-text">{{ post.headline }}</p>
                       </div>
+                </div>
+
+                {% elif post.content_type == 'TICKET' %}
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-text">{{ post.user }} a demandé(e) une critique <span style="float:right;">{{ post.time_created }}</span></p>
+                            <p class="card-text">{{ post.title }}</p>
+                            <p class="card-text">{{ post.description }}</p>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <a href="{% url 'content:ticket_detail' post.id %}" class="btn btn-outline-secondary me-md-2">Créer une critique</a>
+                            </div>
+                        </div>
                     </div>
 
-               {% endfor %}
+                {% elif post.content_type == 'REVIEW' %}
+                     <div class="card">
+                          <div class="card-body">
+                            <p class="card-text">{{ post.user }} a publié(e) une critique <span style="float:right;">{{ post.time_created }}</span></p>
+                            <p class="card-text">{{ post.rating }} étoiles</p>
+                            <p class="card-text">{{ post.headline }}</p>
+                          </div>
+                    </div>
+
+            {% endif %}
+        {% endfor %}
 
  </div>
 {% endblock content_box_3 %}

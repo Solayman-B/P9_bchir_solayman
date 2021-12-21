@@ -9,31 +9,29 @@ Suivre d'autres utilisateurs
    <h3>Suivre d'autres utilisateurs</h3>
      <div>
 
-     <form method="post", action="">
+     <form method="POST">
          {% csrf_token %}
-         {{ user_form.as_p }}
-         <button class="btn btn-outline-secondary">Envoyer</button>
+         <input placeholder="Nom d'utilisateur" type="search" name="search">
+         <button class="btn btn-outline-secondary" type="submit">Envoyer</button>
      </form>
      </div>
     <h3>Abonnements</h3>
-
-
-      {% for abonne in abonnes %}
+      {% for abonnement in abonnes %}
            <div class="card">
               <div class="card-body">
-                  <p class="card-text"> {{ abonne.abonnements }}</p>
+                  <p class="card-text"> {{ abonnement.abonnements }}</p>
                   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <a href="{% url 'content:unfollow' abonne.id %}" class="btn btn-outline-secondary me-md-2">Se désabonner</a>
+                    <a href="{% url 'content:unfollow' abonnement.id %}" class="btn btn-outline-secondary me-md-2">Se désabonner</a>
                   </div>
               </div>
             </div>
 
       {% endfor %}
     <h3>Abonnés</h3>
-      {% for abonnement in abonnements %}
+      {% for abonne in abonnements %}
           <div class="card">
               <div class="card-body">
-                  <p class="card-text">{{ abonnement.abonnes }}</p>
+                  <p class="card-text">{{ abonne.abonnes }}</p>
                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                    </div>
               </div>
