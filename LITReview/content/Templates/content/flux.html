@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+
 {% block title %}
     Mon flux
 {% endblock title %}
@@ -26,7 +27,7 @@
                 <div class="card">
                       <div class="card-body">
                         <p class="card-text">Vous avez publié une critique <span style="float:right;">{{ post.time_created }}</span></p>
-                        <p class="card-text">{{ post.rating }} étoiles</p>
+                        <p class="card-text"><img src="static/media/{{ post.rating }}.png"></p>
                         <p class="card-text">{{ post.headline }}</p>
                       </div>
                 </div>
@@ -47,7 +48,7 @@
                      <div class="card">
                           <div class="card-body">
                             <p class="card-text">{{ post.user }} a publié(e) une critique <span style="float:right;">{{ post.time_created }}</span></p>
-                            <p class="card-text">{{ post.rating }} étoiles</p>
+                            <p class="card-text"><img src="static/media/{{ post.rating }}.png"></p>
                             <p class="card-text">{{ post.headline }}</p>
                           </div>
                     </div>
