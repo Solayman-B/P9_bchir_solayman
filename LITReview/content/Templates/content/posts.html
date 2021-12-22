@@ -29,7 +29,7 @@
                    <div class="card">
                       <div class="card-body">
                         <p class="card-text">Vous avez publié une critique <span style="float:right;">{{ review.time_created }}</span></p>
-                        <p class="card-text">{{ review.rating }} étoiles</p>
+                        <p class="card-text"><img src="../static/media/{{ review.rating }}.png"></p>
                         <p class="card-text">{{ review.headline }}</p>
                           <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                <a href="{% url 'content:review_update' review.id %}" class="btn btn-outline-secondary me-md-2">Modifier</a>
