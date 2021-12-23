@@ -44,7 +44,6 @@
                             <p class="card-text">{{ post.title }}</p>
                             <p class="card-text">{{ post.description }}</p>
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                {{ Review.object.filter }}
                                 <a href="{% url 'content:ticket_detail' post.id %}" class="btn btn-outline-secondary me-md-2">Créer une critique</a>
                             </div>
                         </div>
