@@ -29,6 +29,11 @@
                         <p class="card-text">Vous avez publié une critique <span style="float:right;">{{ post.time_created }}</span></p>
                         <p class="card-text"><img src="static/media/{{ post.rating }}.png"></p>
                         <p class="card-text">{{ post.headline }}</p>
+                           <div class="card">
+                                  <div class="card-body">
+                                    <p class="card-text">{{ post.ticket_id }}</p>
+                                  </div>
+                              </div>
                       </div>
                 </div>
 
@@ -39,6 +44,7 @@
                             <p class="card-text">{{ post.title }}</p>
                             <p class="card-text">{{ post.description }}</p>
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                {{ Review.object.filter }}
                                 <a href="{% url 'content:ticket_detail' post.id %}" class="btn btn-outline-secondary me-md-2">Créer une critique</a>
                             </div>
                         </div>
@@ -50,6 +56,11 @@
                             <p class="card-text">{{ post.user }} a publié(e) une critique <span style="float:right;">{{ post.time_created }}</span></p>
                             <p class="card-text"><img src="static/media/{{ post.rating }}.png"></p>
                             <p class="card-text">{{ post.headline }}</p>
+                              <div class="card">
+                                  <div class="card-body">
+                                    <p class="card-text">{{ post.ticket_id }}</p>
+                                  </div>
+                              </div>
                           </div>
                     </div>
 

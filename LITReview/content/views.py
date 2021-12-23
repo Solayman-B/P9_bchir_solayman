@@ -117,7 +117,6 @@ def review_update(request, review_id):
 def followed_users_objects(users_follow, request, response_review):
 	object = []
 	for user_follow in users_follow:
-		print('user_follow.id', user_follow.id)
 		object.append(list(chain(Ticket.objects.filter(user_id=user_follow.abonnements_id).annotate(content_type=Value('TICKET', CharField())), Review.objects.filter(user_id=user_follow.abonnements_id).annotate(content_type=Value('REVIEW', CharField())))))
 	objects = list(chain.from_iterable(object))
 	return objects
@@ -126,27 +125,25 @@ def followed_users_objects(users_follow, request, response_review):
 def flux(request):
 	user_tickets = Ticket.objects.filter(user_id=request.user.id)
 	user_tickets = user_tickets.annotate(content_type=Value('USER_TICKET', CharField()))
-	print('user_tickets', user_tickets)
 
 	user_reviews = Review.objects.filter(user_id=request.user.id)
 	user_reviews = user_reviews.annotate(content_type=Value('USER_REVIEW', CharField()))
-	print('user_reviews', user_reviews)
 
 	users_follow = UserFollows.objects.filter(abonnes_id=request.user.id)
-	print('users_follow', users_follow)
 
 	response_review = Review.objects.exclude(user_id=request.user.id)
 	response_review = response_review.filter(ticket__in = Ticket.objects.filter(user_id=request.user.id))
 	response_review = response_review.annotate(content_type=Value('REVIEW', CharField()))
-	print('response_review', response_review)
-	#doublon avec followed_objects
 
 	followed_objects = followed_users_objects(users_follow, request, response_review)
-	print('followed_objects', followed_objects)
-	#doublon avec response_review
+
+	followed_objects_cleaned = []
+	for followed_object in followed_objects:
+		if followed_object not in response_review:
+			followed_objects_cleaned.append(followed_object)
 
 	posts = sorted(
-		chain(user_tickets, user_reviews, followed_objects, response_review),
+		chain(user_tickets, user_reviews, followed_objects_cleaned, response_review),
 		key=lambda post: post.time_created,
 		reverse=True
 	)
