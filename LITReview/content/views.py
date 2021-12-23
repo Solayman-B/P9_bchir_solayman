@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.db.models import CharField, Value
+from django.db.models import CharField, Value, Q
 from accounts.models import User
 from .models import Ticket, Review, UserFollows
 from .forms import TicketForm, ReviewForm
@@ -119,44 +119,38 @@ def followed_users_objects(users_follow, request):
 		object.append(list(chain(Ticket.objects.filter(user_id=user_follow.abonnements_id).annotate(content_type=Value('TICKET', CharField())), Review.objects.filter(user_id=user_follow.abonnements_id).annotate(content_type=Value('REVIEW', CharField())))))
 	objects = list(chain.from_iterable(object))
 	return objects
+def get_users_viewable_reviews(user):
+	reviews = Review.objects.filter(Q(ticket__user_id=user.id) | Q(
+		ticket__user_id__in=UserFollows.objects.filter(
+			abonnes_id=user.id).values_list("abonnements_id", flat=True))).distinct()
+	return reviews
+
+def get_users_viewable_tickets(user):
+	tickets = Ticket.objects.filter(Q(user_id=user.id) | Q(
+		user_id__in=UserFollows.objects.filter(
+			abonnes_id=user.id).values_list("abonnements_id", flat=True))).distinct()
+	return tickets
 
 @login_required
 def flux(request):
-	user_tickets = Ticket.objects.filter(user_id=request.user.id)
-	test = Review.objects.filter(user_id=request.user.id)
-	print('test', test)
-	#test2 = Ticket.objects.filter(id__in=test.ticket_id)
 
-	for test3 in test:
-		print(Ticket.objects.filter(id__in=test3.ticket_id), 'SOLUTION')
+	reviews = get_users_viewable_reviews(request.user)
+	# returns queryset of reviews
+	reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
 
-	Ticket.objects.filter(id = Review.objects.filter(user_id=request.user.id))
+	tickets = get_users_viewable_tickets(request.user)
+	# returns queryset of tickets
+	tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
 
-	user_tickets = user_tickets.annotate(content_type=Value('USER_TICKET', CharField()))
+	user_reviewed_tickets = Ticket.objects.filter(review__user_id=request.user.id)
 
-	user_reviews = Review.objects.filter(user_id=request.user.id)
-	user_reviews = user_reviews.annotate(content_type=Value('USER_REVIEW', CharField()))
-
-	users_follow = UserFollows.objects.filter(abonnes_id=request.user.id)
-
-	response_review = Review.objects.exclude(user_id=request.user.id)
-	response_review = response_review.filter(ticket__in = Ticket.objects.filter(user_id=request.user.id))
-	response_review = response_review.annotate(content_type=Value('REVIEW', CharField()))
-
-	followed_objects = followed_users_objects(users_follow, request)
-
-	followed_objects_cleaned = []
-	for followed_object in followed_objects:
-		if followed_object not in response_review:
-			followed_objects_cleaned.append(followed_object)
-
+	# combine and sort the two types of posts
 	posts = sorted(
-		chain(user_tickets, user_reviews, followed_objects_cleaned, response_review),
+		chain(reviews, tickets),
 		key=lambda post: post.time_created,
 		reverse=True
 	)
-
-	return render(request, "content/flux.html", context={'posts': posts})
+	return render(request, 'content/flux.html', context={'posts': posts, 'user_reviewed_tickets': user_reviewed_tickets})
 
 
 @login_required
