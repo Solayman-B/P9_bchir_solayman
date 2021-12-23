@@ -5,7 +5,6 @@ from accounts.models import User
 from .models import Ticket, Review, UserFollows
 from .forms import TicketForm, ReviewForm
 from itertools import chain
-from django.db.models import Q
 
 
 
@@ -114,7 +113,7 @@ def review_update(request, review_id):
 
 	return render(request, "content/review_update.html", context)
 
-def followed_users_objects(users_follow, request, response_review):
+def followed_users_objects(users_follow, request):
 	object = []
 	for user_follow in users_follow:
 		object.append(list(chain(Ticket.objects.filter(user_id=user_follow.abonnements_id).annotate(content_type=Value('TICKET', CharField())), Review.objects.filter(user_id=user_follow.abonnements_id).annotate(content_type=Value('REVIEW', CharField())))))
@@ -124,6 +123,15 @@ def followed_users_objects(users_follow, request, response_review):
 @login_required
 def flux(request):
 	user_tickets = Ticket.objects.filter(user_id=request.user.id)
+	test = Review.objects.filter(user_id=request.user.id)
+	print('test', test)
+	#test2 = Ticket.objects.filter(id__in=test.ticket_id)
+
+	for test3 in test:
+		print(Ticket.objects.filter(id__in=test3.ticket_id), 'SOLUTION')
+
+	Ticket.objects.filter(id = Review.objects.filter(user_id=request.user.id))
+
 	user_tickets = user_tickets.annotate(content_type=Value('USER_TICKET', CharField()))
 
 	user_reviews = Review.objects.filter(user_id=request.user.id)
@@ -135,7 +143,7 @@ def flux(request):
 	response_review = response_review.filter(ticket__in = Ticket.objects.filter(user_id=request.user.id))
 	response_review = response_review.annotate(content_type=Value('REVIEW', CharField()))
 
-	followed_objects = followed_users_objects(users_follow, request, response_review)
+	followed_objects = followed_users_objects(users_follow, request)
 
 	followed_objects_cleaned = []
 	for followed_object in followed_objects:
