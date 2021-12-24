@@ -11,40 +11,16 @@
  </div>
 <div class="container col-md-8 mx-auto">
         {% for post in posts %}
-            {% if post.content_type == 'USER_TICKET' %}
-                <div class="card">
-                    <div class="card-body">
-                        <p class="card-text">Vous avez demandé une critique <span style="float:right;">{{ post.time_created }}</span></p>
-                        <p class="card-text">{{ post.title }}</p>
-                        <p class="card-text">{{ post.description }}</p>
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a href="{% url 'content:ticket_detail' post.id %}" class="btn btn-outline-secondary me-md-2">Créer une critique</a>
-                        </div>
-                    </div>
-                </div>
-
-            {% elif post.content_type == 'USER_REVIEW' %}
-                <div class="card">
-                      <div class="card-body">
-                        <p class="card-text">Vous avez publié une critique <span style="float:right;">{{ post.time_created }}</span></p>
-                        <p class="card-text"><img src="static/media/{{ post.rating }}.png"></p>
-                        <p class="card-text">{{ post.headline }}</p>
-                           <div class="card">
-                                  <div class="card-body">
-                                    <p class="card-text">{{ post.ticket_id }}</p>
-                                  </div>
-                              </div>
-                      </div>
-                </div>
-
-                {% elif post.content_type == 'TICKET' %}
+                {% if post.content_type == 'TICKET' %}
                     <div class="card">
                         <div class="card-body">
-                            <p class="card-text">{{ post.user }} a demandé(e) une critique <span style="float:right;">{{ post.time_created }}</span></p>
+                            <p class="card-text">{% if user == post.user %}Vous avez demandé une critique{% else %}{{ post.user }} a demandé(e) une critique{% endif %} <span style="float:right;">{{ post.time_created }}</span></p>
                             <p class="card-text">{{ post.title }}</p>
                             <p class="card-text">{{ post.description }}</p>
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <a href="{% url 'content:ticket_detail' post.id %}" class="btn btn-outline-secondary me-md-2">Créer une critique</a>
+                                {% if not user == post.user and not post in user_reviewed_tickets %}
+                                    <a href="{% url 'content:ticket_detail' post.id %}" class="btn btn-outline-secondary me-md-2">Créer une critique</a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -52,12 +28,13 @@
                 {% elif post.content_type == 'REVIEW' %}
                      <div class="card">
                           <div class="card-body">
-                            <p class="card-text">{{ post.user }} a publié(e) une critique <span style="float:right;">{{ post.time_created }}</span></p>
+                            <p class="card-text">{% if user == post.user %}Vous avez publié une critique{% else %}{{ post.user }} a publié(e) une critique{% endif %}<span style="float:right;">{{ post.time_created }}</span></p>
                             <p class="card-text"><img src="static/media/{{ post.rating }}.png"></p>
                             <p class="card-text">{{ post.headline }}</p>
                               <div class="card">
                                   <div class="card-body">
-                                    <p class="card-text">{{ post.ticket_id }}</p>
+                                    <p class="card-text">Ticket - {{ post.ticket.user }}</p>
+                                    <p class="card-text">{{ post.ticket.title }}</p>
                                   </div>
                               </div>
                           </div>
