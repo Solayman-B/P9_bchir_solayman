@@ -5,21 +5,22 @@
 {% endblock title %}
 
 {% block content_box_3 %}
-    <div class="container col-md-8 mx-auto">
+    <div class="container col-md-12 mx-auto">
          <div class="row justify-content-center">
-         <div class="col-5">
+         <div class="col-6 mt-4">
             <h3>Inscrivez-vous maintenant</h3>
-                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-            <button class="btn btn-outline-secondary" onclick="window.location.href = '{% url 'accounts:register' %}';">S'incrire</button>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
+            <button class="btn btn-outline-dark " onclick="window.location.href = '{% url 'accounts:register' %}';">S'incrire</button>
                 </div>
         </div>
-         <div class="col-5">
+         <div class="col-6 mt-4">
              <h3>Connectez-vous</h3>
-             <form method="post", action="">
+             <form class="pt-4" method="post", action="">
                  {% csrf_token %}
-                 {{ form.as_p }}
-                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <input class="btn btn-outline-secondary" type="submit" value="Se connecter">
+                 <div class="connexion-field border border-dark mb-4">{{ form.username }}</div>
+                 <div class="connexion-field border border-dark">{{ form.password }}</div>
+                 <div class="d-grid gap-2 d-md-flex justify-content-md-end pt-4">
+                    <input class="btn btn-outline-dark" type="submit" value="Se connecter">
                  </div>
              </form>
         </div>
