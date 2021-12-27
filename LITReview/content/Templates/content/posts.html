@@ -5,39 +5,45 @@
 {% endblock title %}
 
 {% block content_box_3 %}
- <div class="container col-md-4 justify-content-center">
+ <div class="container col-md-2 justify-content-center mt-4">
    <h3>
       Vos posts
    </h3>
-<div class="container col-md-8 mx-auto">
-       {% for ticket in tickets %}
-           <div class="card">
+ </div>
+<div class="container col-md-5 mx-auto mt-3">
+       {% for post in posts %}
+                {% if post.content_type == 'TICKET' %}
+           <div class="card mb-2">
               <div class="card-body">
-                <p class="card-text">Vous avez publié un ticket <span style="float:right;">{{ ticket.time_created }}</span></p>
-                <p class="card-text">{{ ticket.title }}</p>
-                <p class="card-text">{{ ticket.description }}</p>
+                <div class="card-text">Vous avez publié un ticket <span style="float:right;">{{ post.time_created }}</span></div>
+                <p class="card-text">{{ post.title }}</p>
+                <p class="card-text">{{ post.description }}</p>
                   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <a href="{% url 'content:ticket_update' ticket.id %}" class="btn btn-outline-secondary me-md-2">Modifier</a>
-                    <a href="{% url 'content:ticket_delete' ticket.id %}" class="btn btn-outline-secondary me-md-2">Supprimer</a>
+                    <a href="{% url 'content:ticket_update' post.id %}" class="btn btn-outline-dark me-md-2">Modifier</a>
+                    <a href="{% url 'content:ticket_delete' post.id %}" class="btn btn-outline-dark me-md-2">Supprimer</a>
                   </div>
               </div>
             </div>
 
-       {% endfor %}
-
-        {% for review in reviews %}
-                   <div class="card">
+           {% else %}
+                   <div class="card mb-2">
                       <div class="card-body">
-                        <p class="card-text">Vous avez publié une critique <span style="float:right;">{{ review.time_created }}</span></p>
-                        <p class="card-text"><img src="../static/media/{{ review.rating }}.png"></p>
-                        <p class="card-text">{{ review.headline }}</p>
-                          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                               <a href="{% url 'content:review_update' review.id %}" class="btn btn-outline-secondary me-md-2">Modifier</a>
-                               <a href="{% url 'content:review_delete' review.id %}" class="btn btn-outline-secondary me-md-2">Supprimer</a>
+                        <p class="card-text">Vous avez publié une critique <span style="float:right;">{{ post.time_created }}</span></p>
+                        <p class="card-text"><img src="../static/media/{{ post.rating }}.png" alt="notation"></p>
+                        <p class="card-text">{{ post.headline }}</p>
+                          <div class="card">
+                                  <div class="card-body">
+                                    <p class="card-text">Ticket - {{ post.ticket.user }}</p>
+                                    <p class="card-text">{{ post.ticket.title }}</p>
+                                  </div>
+                              </div>
+                          <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-2">
+                               <a href="{% url 'content:review_update' post.id %}" class="btn btn-outline-dark me-md-2">Modifier</a>
+                               <a href="{% url 'content:review_delete' post.id %}" class="btn btn-outline-dark me-md-2">Supprimer</a>
                           </div>
                       </div>
                     </div>
-
+                {% endif %}
                {% endfor %}
 </div>
 {% endblock content_box_3 %}

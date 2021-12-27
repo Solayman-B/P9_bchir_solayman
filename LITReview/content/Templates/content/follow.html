@@ -5,29 +5,30 @@ Suivre d'autres utilisateurs
 {% endblock title %}
 
 {% block content_box_3 %}
-  <div class="container col-md-4 justify-content-center">
+  <div class="container col-md-10 justify-content-center mt-4">
    <h3>Suivre d'autres utilisateurs</h3>
-     <div>
+     <div class="mt-3">
 
      <form method="POST">
          {% csrf_token %}
-         <input placeholder="Nom d'utilisateur" type="search" name="search">
-         <button class="btn btn-outline-secondary" type="submit">Envoyer</button>
+         <input id="user-field" placeholder="Nom d'utilisateur" type="search" name="search">
+         <button class="btn btn-outline-dark ms-3" type="submit">Envoyer</button>
      </form>
      </div>
+  <div class="mt-4">
     <h3>Abonnements</h3>
+  </div>
       {% for abonnement in abonnes %}
            <div class="card">
               <div class="card-body">
-                  <p class="card-text"> {{ abonnement.abonnements }}</p>
-                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <a href="{% url 'content:unfollow' abonnement.id %}" class="btn btn-outline-secondary me-md-2">Se désabonner</a>
-                  </div>
+                  <div class="card-text"> {{ abonnement.abonnements }} <span style="float:right;"><a href="{% url 'content:unfollow' abonnement.id %}" class="btn btn-outline-secondary me-md-2">Se désabonner</a></span></div>
               </div>
             </div>
 
       {% endfor %}
+    <div class="mt-4">
     <h3>Abonnés</h3>
+    </div>
       {% for abonne in abonnements %}
           <div class="card">
               <div class="card-body">

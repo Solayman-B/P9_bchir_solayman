@@ -10,6 +10,7 @@ def register(request):
 
         if form.is_valid():
             form.save()
+            return redirect("content:flux")
     else:
         form = UserForm()
 
