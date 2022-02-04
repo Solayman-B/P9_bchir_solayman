@@ -50,7 +50,7 @@ First, you can download this project by :
 
 clicking on « code » then « download ZIP »
 
-or [click here to download it directly](https://github.com/Solayman-B/P4_bchir_solayman/archive/refs/heads/main.zip)
+or [click here to download it directly](https://github.com/Solayman-B/P9_bchir_solayman/archive/refs/heads/main.zip)
 
 Unzip the file when the download is completed
 
